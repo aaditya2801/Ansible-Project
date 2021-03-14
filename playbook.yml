@@ -1,0 +1,10 @@
+- hosts: localhost
+  vars_prompt:
+  - name: "access_key"
+    prompt: "Enter access key"
+    private: yes
+  - name: "secret_key"
+    prompt: "Enter secret key"
+    private: yes
+  roles:
+  - role: ansible-eks
