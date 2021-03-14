@@ -1,5 +1,5 @@
-Role Name
-=========
+Role: ansible-eks 
+=================
 
 A brief description of the role goes here.
 
