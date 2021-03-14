@@ -9,6 +9,23 @@
     name:
        - "{{ pkg1 }}"
        - "{{ pkg2 }}"
+       - "{{ pkg3 }}"
+ 
+- name: Configuring aws credentials
+  blockinfile:
+    path: /root/.aws/credentials
+    block: |
+      [default]
+      aws_access_key_id = "{{ access_key }}"
+      aws_secret_access_key = "{{ secret_key }}"
+
+- name: Configuring aws config
+  blockinfile:
+    path: /root/.aws/config
+    block: |
+      [default]
+      region = "{{ region_name }}"
+      output = "{{ op }}"
 
 - name: creating VPC
   ec2_vpc_net:
