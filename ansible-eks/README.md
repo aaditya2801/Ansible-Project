@@ -13,7 +13,8 @@ I have Integrated DevOps Automation Tool: Ansible with Amazon (AWS) Elastic Kube
 7.) EKS Cluster: It is a managed Kubernetes service that makes it easy for you to run Kubernetes on AWS and on-premises.
 8.) Node Group for EKS Cluster: It automates the provisioning and lifecycle management of nodes (Amazon EC2 instances) for Amazon EKS Kubernetes clusters.
 
-## List of Modules that I have used in Role: pip, Blockinfile, ec2_vpc_net, ec2_vpc_subnet, ec2_vpc_igw, ec2_vpc_route_table, ec2_group, iam_role, aws_eks_cluster, yum_repository, package, command.
+## List of Modules that I have used in Role: 
+pip, Blockinfile, ec2_vpc_net, ec2_vpc_subnet, ec2_vpc_igw, ec2_vpc_route_table, ec2_group, iam_role, aws_eks_cluster, yum_repository, package, command.
 
 ## Explanation of Files that I have used in Role:
 1.) policy1.json: It contains assume role policy document for service: eks.amazonaws.com.
