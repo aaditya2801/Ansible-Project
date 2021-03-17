@@ -1,38 +1,42 @@
 Role: ansible-eks 
 =================
 
-A brief description of the role goes here.
+I have Integrated DevOps Automation Tool: Ansible with Amazon (AWS) Elastic Kubernetes Service and Deployed Multi-tier Architecture on the top of EKS Cluster. For Solving this use case I have created one Ansible Role which contains variables, files, and tasks.
 
-Requirements
-------------
+##* Following are the List of AWS Resources that I have deployed using this Role:
+1.) Virtual Private Cloud (VPC): Isolated virtual network.
+2.) Two Public Subnets in Availability Zone (AZ): ap-south-1a and ap-south-1b.
+3.) Internet Gateway: That allows communication between VPC and the Internet.
+4.) Route Table: This contains a set of rules, called routes, that are used to determine where network traffic from your subnet or gateway is directed.
+5.) Security Group: Virtual firewall to control inbound traffic (port: 22, 80, 3306) and outbound traffic (allow all traffic).
+6.) Two Roles: One for EKS that contains “AmazonEKSClusterPolicy” and another one for EC-2 that contains “AmazonEC2FullAccess”, “AmazonEKSWorkerNodePolicy” and “AmazonEC2ContainerRegistryFullAccess/ReadOnly”.
+7.) EKS Cluster: It is a managed Kubernetes service that makes it easy for you to run Kubernetes on AWS and on-premises.
+8.) Node Group for EKS Cluster: It automates the provisioning and lifecycle management of nodes (Amazon EC2 instances) for Amazon EKS Kubernetes clusters.
+* List of Modules that I have used in Role: pip, Blockinfile, ec2_vpc_net, ec2_vpc_subnet, ec2_vpc_igw, ec2_vpc_route_table, ec2_group, iam_role, aws_eks_cluster, yum_repository, package, command.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+##* Explanation of Files that I have used in Role:
+1.) policy1.json: It contains assume role policy document for service: eks.amazonaws.com.
+2.) policy2.json: It contains assume role policy document for service: ec2.amazonaws.com.
+3.) sc.yml: It deploy Storage Class with provisioner: Kubernetes.io/aws-ebs, type: gp2, zones: ap-south-1a/1b, iopsPerGB: 10 and fsType: ext4.
+4.) secret.yml: It stores secrets in Base64 including username, password, and database name that requires in a multi-tier architecture.
+5.) wordpress.yml: It creates WordPress deployment, exposes it with service type: load balancer, and claims the storage from the PersistentVolumeClaim (PVC) which is bound with AWS-EBS Storage Class.
+6.) mysql.yml: It creates MySQL deployment, exposes it with service type: ClusterIP, and claims the storage from the PersistentVolumeClaim (PVC) which is bounded with AWS-EBS Storage Class.
 
-Role Variables
---------------
+##* Explanation of Important Variables that I have used in Role:
+1.) policy1: contain ARN for EKS Cluster Policy.
+2.) policy2: contain ARN for EC2 Full Access.
+3.) policy3: contain ARN for EKS Worker Node Policy.
+4.) policy4: contain ARN for EC2 Container Registry Full Access.
+5.) policy5: contain ARN for EC2 Container Registry Read Only.
+6.) b_url: contain Base URL for Kubernetes Repo.
+7.) g_key: contain GPG Key for Kubernetes Repo.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+## Technologies Used:
+* Configuration Management Tool: Ansible.
+* Public Cloud: Amazon Web Services (AWS).
+* Operating System: RHEL-8.
 
-Dependencies
-------------
+## Conclusion: In this role, I have covered the deployment of WordPress with MySQL Server on multi-tier architecture. It encourages the best practice of creating application components that are easy to maintain, decouple, and scale.
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+## Future Scope: I can add more AWS resources like KMS for creating and managing cryptographic keys for Security and Encrypting Volume, it can integrate with AWS CloudTrail to provide us with logs of all key usage. Replacing EBS with EFS, so PVC will be bound with AWS-EFS Storage Class are some of my Future Work for this Project.
 
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
